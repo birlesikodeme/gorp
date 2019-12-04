@@ -15,7 +15,7 @@ import (
 	"github.com/poy/onpar"
 	"github.com/poy/onpar/expect"
 	"github.com/poy/onpar/matchers"
-	"github.com/go-gorp/gorp"
+	"github.com/birlesikodeme/gorp/v3"
 )
 
 func TestPostgresDialect(t *testing.T) {

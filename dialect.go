@@ -30,6 +30,8 @@ type Dialect interface {
 
 	AutoIncrInsertSuffix(col *ColumnMap) string
 
+	AutoIncrInsertInfix(col *ColumnMap) string
+
 	// string to append to "create table" statement for vendor specific
 	// table attributes
 	CreateTableSuffix() string

@@ -61,6 +61,10 @@ func (d SqliteDialect) AutoIncrInsertSuffix(col *ColumnMap) string {
 	return ""
 }
 
+func (d SqliteDialect) AutoIncrInsertInfix(col *ColumnMap) string {
+	return ""
+}
+
 // Returns suffix
 func (d SqliteDialect) CreateTableSuffix() string {
 	return d.suffix

@@ -23,7 +23,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/go-gorp/gorp"
+	"github.com/birlesikodeme/gorp/v3"
 
 	_ "github.com/go-sql-driver/mysql"
 	_ "github.com/lib/pq"
@@ -2643,7 +2643,7 @@ func initDbMapBench() *gorp.DbMap {
 func initDbMap() *gorp.DbMap {
 	dbmap := newDbMap()
 	dbmap.AddTableWithName(Invoice{}, "invoice_test").SetKeys(true, "Id")
-	dbmap.AddTableWithName(InvoiceTag{}, "invoice_tag_test") //key is set via primarykey attribute
+	dbmap.AddTableWithName(InvoiceTag{}, "invoice_tag_test") // key is set via primarykey attribute
 	dbmap.AddTableWithName(AliasTransientField{}, "alias_trans_field_test").SetKeys(true, "id")
 	dbmap.AddTableWithName(OverriddenInvoice{}, "invoice_override_test").SetKeys(false, "Id")
 	dbmap.AddTableWithName(Person{}, "person_test").SetKeys(true, "Id").SetVersionCol("Version")
@@ -2651,8 +2651,8 @@ func initDbMap() *gorp.DbMap {
 	dbmap.AddTableWithName(IdCreated{}, "id_created_test").SetKeys(true, "Id")
 	dbmap.AddTableWithName(TypeConversionExample{}, "type_conv_test").SetKeys(true, "Id")
 	dbmap.AddTableWithName(WithEmbeddedStruct{}, "embedded_struct_test").SetKeys(true, "Id")
-	//dbmap.AddTableWithName(WithEmbeddedStructConflictingEmbeddedMemberNames{}, "embedded_struct_conflict_name_test").SetKeys(true, "Id")
-	//dbmap.AddTableWithName(WithEmbeddedStructSameMemberName{}, "embedded_struct_same_member_name_test").SetKeys(true, "Id")
+	// dbmap.AddTableWithName(WithEmbeddedStructConflictingEmbeddedMemberNames{}, "embedded_struct_conflict_name_test").SetKeys(true, "Id")
+	// dbmap.AddTableWithName(WithEmbeddedStructSameMemberName{}, "embedded_struct_same_member_name_test").SetKeys(true, "Id")
 	dbmap.AddTableWithName(WithEmbeddedStructBeforeAutoincrField{}, "embedded_struct_before_autoincr_test").SetKeys(true, "Id")
 	dbmap.AddTableDynamic(&dynTableInst1, "").SetKeys(true, "Id").AddIndex("TenantInst1Index", "Btree", []string{"Name"}).SetUnique(true)
 	dbmap.AddTableDynamic(&dynTableInst2, "").SetKeys(true, "Id").AddIndex("TenantInst2Index", "Btree", []string{"Name"}).SetUnique(true)

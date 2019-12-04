@@ -147,7 +147,11 @@ func (t *TableMap) bindInsert(elem reflect.Value) (bindInstance, error) {
 				plan.autoIncrFieldName = col.fieldName
 			}
 		}
-		s.WriteString(") values (")
+		s.WriteString(")")
+		if plan.autoIncrIdx > -1 {
+			s.WriteString(t.dbmap.Dialect.AutoIncrInsertInfix(t.Columns[plan.autoIncrIdx]))
+		}
+		s.WriteString(" values (")
 		s.WriteString(s2.String())
 		s.WriteString(")")
 		if plan.autoIncrIdx > -1 {

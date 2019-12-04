@@ -15,7 +15,6 @@ import (
 // Tested with driver: github.com/denisenkom/go-mssqldb
 
 type SqlServerDialect struct {
-
 	// If set to "2005" legacy datatypes will be used
 	Version string
 }
@@ -90,6 +89,11 @@ func (d SqlServerDialect) AutoIncrInsertSuffix(col *ColumnMap) string {
 	return ""
 }
 
+func (d SqlServerDialect) AutoIncrInsertInfix(col *ColumnMap) string {
+
+	return " OUTPUT Inserted." + d.QuoteField(col.ColumnName)
+}
+
 func (d SqlServerDialect) CreateTableSuffix() string { return ";" }
 
 func (d SqlServerDialect) TruncateClause() string {
@@ -102,7 +106,25 @@ func (d SqlServerDialect) BindVar(i int) string {
 }
 
 func (d SqlServerDialect) InsertAutoIncr(exec SqlExecutor, insertSql string, params ...interface{}) (int64, error) {
-	return standardInsertAutoIncr(exec, insertSql, params...)
+	var target int64 = 0
+
+	rows, err := exec.Query(insertSql, params...)
+	if err != nil {
+		return 0, err
+	}
+	defer rows.Close()
+
+	if !rows.Next() {
+		return 0, fmt.Errorf("no serial value returned for insert: %s Encountered error: %s", insertSql, rows.Err())
+	}
+	if err := rows.Scan(&target); err != nil {
+		return target, err
+	}
+	if rows.Next() {
+		return 0, fmt.Errorf("more than two serial value returned for insert: %s", insertSql)
+	}
+
+	return target, rows.Err()
 }
 
 func (d SqlServerDialect) QuoteField(f string) string {

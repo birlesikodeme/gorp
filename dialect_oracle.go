@@ -77,6 +77,10 @@ func (d OracleDialect) AutoIncrInsertSuffix(col *ColumnMap) string {
 	return ""
 }
 
+func (d OracleDialect) AutoIncrInsertInfix(col *ColumnMap) string {
+	return ""
+}
+
 // Returns suffix
 func (d OracleDialect) CreateTableSuffix() string {
 	return ""

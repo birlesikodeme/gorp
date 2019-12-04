@@ -13,7 +13,6 @@ import (
 
 // Implementation of Dialect for MySQL databases.
 type MySQLDialect struct {
-
 	// Engine is the storage engine to use "InnoDB" vs "MyISAM" for example
 	Engine string
 
@@ -142,6 +141,10 @@ func (d MySQLDialect) BindVar(i int) string {
 
 func (d MySQLDialect) InsertAutoIncr(exec SqlExecutor, insertSql string, params ...interface{}) (int64, error) {
 	return standardInsertAutoIncr(exec, insertSql, params...)
+}
+
+func (d MySQLDialect) AutoIncrInsertInfix(col *ColumnMap) string {
+	return ""
 }
 
 func (d MySQLDialect) QuoteField(f string) string {
